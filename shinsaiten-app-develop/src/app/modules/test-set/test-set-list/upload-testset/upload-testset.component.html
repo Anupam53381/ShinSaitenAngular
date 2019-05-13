@@ -1,0 +1,103 @@
+<div class="modal fade" id="modalUploadTestSetCSV" tabindex="-1" role="dialog" aria-hidden="true" data-show="true"
+  data-keyboard="false" data-backdrop="static">
+  <div class="modal-dialog modal-dialog-custom">
+    <div class="modal-content infoModalBody">
+      <div class="modal-header infoModalHeader">{{'upload-testset.upload_pop_up_header'|translate}}</div>
+      <!-- /modal-header -->
+      <div class="modal-body text-center">
+        <div class="row">
+          <p style="font-size:14px;">{{'upload-testset.upload_pop_up_file_guildence_part1'|translate}}<br /> {{'upload-testset.upload_pop_up_file_guildence_part2'|translate}} </p>
+        </div>
+        <div class="row" align="center">
+
+          <input type="file" #fileImportInput name="File Upload" id="txtFileUpload" (change)="fileChangeListener($event)"
+            accept=".csv" class="form-control inputFileClass with-60" (click)="fileReset()" />
+        </div>
+        <br>
+        <div *ngIf="fileFormatInValid" style="color: red; text-align: center;">
+          {{'upload-testset.invalid_file_extention'|translate}}
+        </div>
+        <div *ngIf="fileParsingError" style="color: red; text-align: center;">
+          {{'upload-testset.file_parsing_error_message'|translate}}
+        </div>
+
+
+        <div class="row">
+          <p class="text-center marginTopPer">
+            <button type="button" id="btnSaveUploadCSV" style="width:auto;" class="btn btn-primary lr-margin"
+              data-dismiss="modal" (click)="showPreviewOfFile()" [disabled]="!validate">{{'upload-testset.add_bulk_test_set_pop_up_save_button'|translate}}</button>
+            &nbsp;<button type="button" style="width:auto;" class="btn btn-primary lr-margin" data-dismiss="modal">{{'upload-testset.add_bulk_test_set_pop_up_cancel_button'|translate}}</button>
+          </p>
+        </div>
+      </div>
+    </div> <!-- /.modal-content -->
+  </div> <!-- /.modal-dialog -->
+</div>
+<div class="modal fade" id="modalUploadedCSVPreview" tabindex="-1" role="dialog" aria-hidden="true" data-show="true"
+  data-keyboard="false" data-backdrop="static">
+  <div class="modal-dialog modal-dialog-custom">
+    <div class="modal-content infoModalBody">
+      <div class="modal-header infoModalHeader">{{'upload-testset.upload_pop_up_header'|translate}}</div>
+      <!-- /modal-header -->
+      <div class="modal-body text-center">
+        <div class="row">
+          <p style="font-size:14px;">{{'upload-testset.test_set_size_info_header_part1'|translate}} {{csvRecords.length-1}} {{'upload-testset.test_set_size_info_header_part2'|translate}}</p>
+        </div>
+        <div class="row listItemGroup" align="center">
+          <div class="listItem" *ngFor="let csvRecord of csvRecords" align="text-center"><span>{{csvRecord.testSetName}}</span></div>
+
+        </div>
+        <br>
+        <div class="row">
+          <p class="text-center marginTopPer">
+            <button type="button" style="width:auto;" class="btn btn-primary lr-margin" data-dismiss="modal" (click)="uploadFileToServer()">{{'upload-testset.file_preview_pop_up_confirm_button'|translate}}</button>
+            &nbsp; <button type="button" style="width:auto;" class="btn btn-primary lr-margin" data-dismiss="modal">{{'upload-testset.file_preview_pop_up_cancel_button'|translate}}</button>
+          </p>
+        </div>
+      </div>
+    </div> <!-- /.modal-content -->
+  </div> <!-- /.modal-dialog -->
+</div>
+
+<div class="modal fade" id="modalViewValidationErrors" tabindex="-1" role="dialog" aria-hidden="true" data-show="true"
+  data-keyboard="false" data-backdrop="static">
+  <div class="modal-dialog modal-dialog-custom">
+    <div class="modal-content infoModalBody">
+      <div class="modal-header infoModalHeader">{{'upload-testset.error_pop_up_header'|translate}}</div>
+      <!-- /modal-header -->
+      <div class="modal-body text-center">
+        <div class="row">
+          <p style="font-size:14px;">{{'upload-testset.error_pop_up_body_text'|translate}}</p>
+        </div>
+        <div class="row listItemGroup" align="center">
+          <div class="listItem" *ngFor="let errorRow of errorBeanArray" align="text-center" [ngClass]="'red'">
+            <span>{{'upload-testset.row'|translate}}-{{errorRow.rowId}} |</span>
+            <span *ngIf="errorRow.messageCode !== '00' ">
+
+              {{'upload-testset.'+errorRow.messageCode|translate}}
+            </span>
+            <ng-container *ngIf="errorRow.messageCode === '00' ">
+              <span *ngFor="let errorColumn of errorRow.errorColumList">
+                {{'upload-testset.'+errorColumn.messageCode|translate}} &nbsp;
+              </span>
+            </ng-container>
+          </div>
+        </div>
+        <br>
+        <div class="row">
+          <p class="text-center marginTopPer">
+
+            &nbsp; <button type="button" style="width:auto;" class="btn btn-primary lr-margin" data-dismiss="modal">{{'upload-testset.validation_error_pop_up_cancel_button'|translate}}</button>
+          </p>
+        </div>
+      </div>
+    </div> <!-- /.modal-content -->
+  </div> <!-- /.modal-dialog -->
+</div>
+
+<!--Button for showing the preview-->
+<button style="visibility: hidden;" class="btn btn-danger" #showPreview id="delete-node" name="button" data-toggle="modal"
+  data-target="#modalUploadedCSVPreview"></button>
+<!--Button for showing the Validation Error popup-->
+<button style="visibility: hidden;" class="btn btn-danger" #showValidateError id="delete-node" name="button"
+  data-toggle="modal" data-target="#modalViewValidationErrors"></button>

@@ -1,0 +1,73 @@
+body {
+    font-family: Roboto, Arial, sans-serif;
+    margin: 0;
+  }
+  .basic-container {
+    padding: 30px;
+  }
+  
+  .version-info {
+    font-size: 8pt;
+    float: right;
+  }
+  
+  table {
+    width: 100%;
+  }
+  .mat-row
+  {
+   min-height:27px
+  }
+  .mat-header-row{
+  background-color:#336797;
+  min-height: 32px;
+  }
+  
+  .mat-header-cell{
+   font-size: 13px;
+    color: white;
+    flex: 0 0 14%;
+    justify-content:center;
+    border-bottom-width: 1px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: bold;
+  }
+  
+  .mat-cell{
+    flex: 0 0 14%;
+    font-size: 13px;
+    justify-content:center;
+    font-family: "Hiragino Kaku Gothic Pro", HiraKakuPro-W3, "郢晏�ｵﾎ帷ｹｧ�ｽｮ郢晄焔�ｽｧ蛛ｵ縺� Pro W3", 郢晢ｽ｡郢ｧ�ｽ､郢晢ｽｪ郢ｧ�ｽｪ, Meiryo, "�ｿｽ�ｽｼ�ｽｭ�ｿｽ�ｽｼ�ｽｳ �ｿｽ�ｽｼ�ｽｰ郢ｧ�ｽｴ郢ｧ�ｽｷ郢晢ｿｽ郢ｧ�ｽｯ", verdana, sans-serif;
+  }
+  
+  .mat-header-cell:nth-child(1){
+    flex: 0 0 30%;
+  }
+  .mat-cell:nth-child(1){
+    flex: 0 0 30%;
+    justify-content:left;
+    padding-left: 8%;
+  } 
+  
+  .mat-paginator{
+    min-height:25px
+  
+  }
+  .mat-paginator{
+    background-color:#e3f1fd;
+    font-size: 15px;
+  
+  }
+  
+  .loading-indicator {
+    position: fixed;
+    z-index: 999;
+    height: 2em;
+    width: 2em;
+    overflow: show;
+    margin: auto;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+  }  

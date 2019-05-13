@@ -1,0 +1,35 @@
+
+  <div class="modal fade" id="modalManualTestSetCreation" tabindex="-1" role="dialog" aria-hidden="true" data-show="true"
+  data-keyboard="false" data-backdrop="static" >
+  <div class="modal-dialog modal-dialog-custom">
+    <div class="modal-content infoModalBody">
+      <div class="modal-header infoModalHeader">{{'add-testset.add_test_set_header'|translate}}</div>
+      <!-- /modal-header -->
+      <form [formGroup]="addTestSetForm" >
+        <div class="modal-body text-center">
+          <div class="row" align="center">
+            <p style="font-size:14px;"><input type="text" formControlName="testSetName" [formGroup]="addTestSetForm" name="testSetName" class="form-control with-60" placeholder="Enter New Test Set Name Here" maxlength="50"></p>
+          </div>
+          <!-- <div *ngIf="submitted && (isTestSetAvailable != true)" class="invalid-feedback" style="color: red"> -->
+          <div *ngIf="addTestSetForm.get('testSetName').hasError('incorrect')" class="invalid-feedback" style="color: red">
+            {{'add-testset.same_test_exist'|translate}}
+          </div>
+          <div *ngIf="addTestSetForm.get('testSetName').hasError('invalidTestSetName')" class="invalid-feedback" style="color: red">
+            {{'add-testset.invalid_testset_name'|translate}}
+          </div>
+          <div class="row">
+            <p class="text-center marginTopPer">
+              <button type="button" id="btnSaveTestSetName" style="width:auto;" class="btn btn-primary lr-margin"
+                [disabled]="addTestSetForm.invalid" (click)="addTestSet()">{{'add-testset.add_test_set_save_button'|translate}}</button>&nbsp;
+              <button type="button" style="width:auto;" class="btn btn-primary lr-margin" data-dismiss="modal" >{{'add-testset.add_test_cancel_button'|translate}}</button>
+            </p>
+          </div>
+        </div>
+      </form>
+      <a style="visibility: hidden;"><i class="fa fa-close" data-dismiss="modal" #closeBtn></i></a>
+    </div> <!-- /.modal-content -->
+  </div> <!-- /.modal-dialog -->
+  </div>
+
+
+

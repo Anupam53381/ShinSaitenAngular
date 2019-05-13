@@ -1,0 +1,139 @@
+<!--<!DOCTYPE html>
+<html lang="ja">
+   <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="description" content="">
+      <meta name="author" content="">
+      <title>Add Rater</title>
+       <link href="../material/css/bootstrap.css" rel="stylesheet">
+      <link href="../material/css/common.css" rel="stylesheet">
+      <link href="../material/css/datepicker.css" rel="stylesheet">
+      <script src="../material/js/jquery-3.3.1.min.js"></script>
+      <script src="../material/js/bootstrap.min.js"></script>
+      <script src="../material/js/bootstrap-datepicker.js"></script> -->
+      <head>
+      <!-- <script>
+      	$(document).ready(function() {
+      		$("#register").click(function() {
+      			$('#registerUserInfoModal').modal({
+      				backdrop: 'static'
+      			});
+      		});
+      	});
+      	$(document).ready(function() {
+      		$("#registerCont").click(function() {
+      			$('#registerUserContInfoModal').modal({
+      				backdrop: 'static'
+      			});
+      		});
+      	});
+      </script> -->
+   </head>
+  <!--  <body> -->
+      <!-- <div class="navbar navbar-inverse navbar-fixed-top" style="min-height: 37px;height: 37px;">
+         <div class="col-xs-1 col-sm-1 col-md-2">
+            <font face="Bookman Old Style" color="white" size="5"><b><i>ShinSaiten</i></b></font>
+         </div>
+         <div class="col-xs-offset-6 col-xs-1 col-sm-offset-9 col-sm-1 col-md-offset-8 col-md-2 dropdown">
+            <button class="btn btn-link dropdown-toggle" type="button" data-toggle="dropdown"><font color="white"><b>Rater_SR65</b></font><b class="caret"></b></button>
+            <ul class="dropdown-menu">
+               <li><a href="menu.html">Menu</a></li>
+               <li><a href="#">PC Config Check</a></li>
+               <li class="divider"></li>
+               <li><a href="editProfile.html">Edit Profile</a></li>
+               <li><a href="changePassword.html">Change Password</a></li>
+               <li><a href="login.html">Logout</a></li>
+            </ul>
+         </div>
+      </div>-->
+      
+      <div class="container"  id="ratingMainPanel">
+      <form #raterform="ngForm" (ngSubmit)="editRater(raterform)">
+                 
+      <div class="signup-fields">
+         <div class="col-md-12" style="padding-right: 10px;">
+            <div class="panel panel-primary">
+               <div class="panel-heading">
+                  <h3 class="panel-title">
+                     <b style="text-align: left;">{{'rater-edit.panel_header_add'|translate}}</b>
+                  </h3>
+               </div>    
+		                        
+               <div class="panel-body">
+                  <div class="form-group">
+                  
+                      <div class="row userRow">
+                         <div class="col-md-12">
+                            <label class="col-md-2 control-label">{{'rater-edit.rater_id'|translate}}</label>
+                            <div class="form-inline col-md-3">
+                               {{rater.mailAddress}}
+                            </div>
+                         </div>
+                      </div><br>
+                     
+                      <div class="row userRow">
+                         <div class="col-md-12 form-group">
+                            <label class="col-md-2 control-label" for="name">{{'rater-edit.rater_name'|translate}}</label>
+                            <div class="col-md-3">
+                               <input type="text" [name]="lastName" [(ngModel)]="rater.lastName" #lastName="ngModel" required maxlength="100" class="form-control" placeholder="Last Name" [ngClass]="{ 'is-invalid': lastName.touched && lastName.invalid }">
+						        <div *ngIf="lastName.touched && lastName.invalid " style="color: red" class="invalid-feedback">
+		                            <div *ngIf="lastName.errors.required && lastName.touched">{{'rater-edit.lastname_required_error_message'|translate}}</div>
+		                            
+		                        </div>	      
+						        
+                            </div>
+                            <div class="col-md-3">
+                               <input type="text" name="firstName" [(ngModel)]="rater.firstName" #firstName="ngModel" required maxlength="100" class="form-control" placeholder="First Name" [ngClass]="{ 'is-invalid': firstName.touched && firstName.invalid }">
+						        <div *ngIf="firstName.touched && firstName.invalid" style="color: red" class="invalid-feedback">
+		                            <div *ngIf="firstName.errors.required && firstName.touched">{{'rater-edit.firstname_required_error_message'|translate}}</div>
+		                            
+		                        </div>
+                            </div>
+                            <div class="col-md-3">
+                               <input type="text" name="middleName" [(ngModel)]="rater.middleName" #middleName="ngModel" required maxlength="100" class="form-control" placeholder="Middle Name" [ngClass]="{ 'is-invalid': middleName.touched && middleName.invalid }">
+                            	<div *ngIf="middleName.touched && middleName.invalid" style="color: red" class="invalid-feedback">
+		                            <div *ngIf="middleName.errors.required && middleName.touched">{{'rater-edit.middlename_required_error_message'|translate}}</div>
+		                        </div>
+                            </div>
+                         </div>
+                      </div>
+              
+                      <div class="row userRow">
+                         <div class="col-md-12 form-group">
+                            <label class="col-md-2 control-label">{{'rater-edit.rater_status_header'|translate}}</label>
+                            <div class="form-inline col-md-3">
+                               <label class="radio-inline"><input type="radio" [checked]="rater.isActive === 'T'" id="active" (change)="onActiveSelectionChange('T')"  value="T"  name="isActive" >{{'rater-edit.active_header'|translate}}</label>
+                               <label class="radio-inline"><input type="radio" [checked]="rater.isActive === 'F'" id="inactive" (change)="onActiveSelectionChange('F')"  value="F"  name="isActive" />{{'rater-edit.inactive_header'|translate}}</label>                              
+                            </div>
+                         </div>
+                      </div>
+                      <div class="row userRow">
+                         <div class="col-md-12">
+                            <label class="col-md-2 control-label">{{'rater-edit.test_brand_lebel'|translate}}</label>
+                            <div class="form-inline col-md-3">
+                               {{testBrandName}}
+                            </div>
+                         </div>
+                      </div>
+                      <div class="row userRow text-center">
+                         <div class="col-md-12">                           
+                            <button type="submit" class="btn btn-primary" id="edit" name="edit"  [disabled] = "raterform.invalid">{{'rater-edit.update_header'|translate}}</button>&nbsp;                            
+                            <button type="button" class="btn btn-primary" (click)="loadRaterList()">{{'rater-edit.go_to_list_header'|translate}}</button>
+                         </div>
+                      </div>
+                   </div>
+               </div>
+            </div>
+         </div>
+         </div>
+         </form>
+	  	
+      </div>
+     <!-- <div class="navbar navbar-inverse navbar-fixed-bottom">
+          <p class="footerClass" align="center">
+             Powered by&nbsp;<span class="footerJiem"><b>JIEM</b></span>
+          </p>
+       </div> -->
+<!--    </body>
+</html> -->

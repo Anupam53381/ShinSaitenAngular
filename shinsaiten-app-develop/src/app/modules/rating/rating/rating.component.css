@@ -1,0 +1,41 @@
+.ratingTabContent {
+    border-radius:0px 0px 10px 10px;
+    padding: 1%;
+    background: white;
+    border: 1px solid #dddddd;
+}
+
+.pendingRatingUnit{
+    color:white !important;
+    background-color: #ff0000 !important;
+    cursor: pointer !important;
+}
+.pendingActiveRatingUnit{
+    color:white !important;
+    background-color: darkred !important;
+    cursor: pointer !important;
+}
+
+.defaultRatingUnit{
+    color:white !important;
+    cursor: pointer !important;
+}
+
+.activeSuccessRatingUnit{
+    color: white !important;
+    background-color: #34495e !important;
+    cursor: pointer !important;
+}
+
+.ratingUnitValidationErrorMessage{
+    margin-top: 15px;
+    text-align: center;
+    color:red;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.absolute {
+    position: absolute;
+    opacity: 0.7;
+}

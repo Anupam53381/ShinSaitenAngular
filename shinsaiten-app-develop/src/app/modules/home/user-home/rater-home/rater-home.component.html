@@ -1,0 +1,28 @@
+<div [ngClass]="['container']"  id="ratingMainPanel">
+	<div [ngClass]="['col-md-12']" style="padding-right: 10px;">
+		<div [ngClass]="['panel', 'panel-primary']">
+			<div [ngClass]="['panel-heading']">
+				<h3 [ngClass]="['panel-title']">
+					<b>Menu</b>
+				</h3>
+			</div>
+
+			<div [ngClass]="['panel-body']" style="padding: 25px;">
+				<div *ngFor="let menuInfo of menuInfoList">
+					<div [ngClass]="['col-xs-12', 'col-sm-6', 'col-sm-12', 'col-md-4']">
+						<div [ngClass]="['menuItem']">
+							<div [ngClass]="['menuItemHeader', 'col-xs-4', 'col-sm-4', 'col-md-4']">
+								<img src="{{menuInfo.testBrandIcon}}" [ngClass]="['menuItemImg']">
+								<div>{{menuInfo.testBrandDisplayName}}</div>
+							</div>
+							<div [ngClass]="['menuItemContent','col-xs-8','col-sm-8','col-md-8']">
+								<a [ngClass]="['cursorPtr']" (click)="loadRatingScreen(menuInfo.testBrandId,menuInfo.testBrandDisplayName)">Rating Project Execution</a><!-- (click)="loadRatingScreen(menuInfo.testBrandId,menuInfo.testBrandDisplayName)" --><br />
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</div>

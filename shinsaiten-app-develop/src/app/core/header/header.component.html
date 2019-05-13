@@ -1,0 +1,16 @@
+
+<div class="navbar navbar-inverse navbar-fixed-top" style="min-height: 37px;height: 37px;">
+  <div class="col-xs-1 col-sm-1 col-md-2 " [ngClass]="['cursorPtr']" (click)="goToHome()">
+    <font face="Bookman Old Style" color="white" size="5"><b><i>{{'header-menu.heading_label'|translate}}</i></b></font>
+  </div>
+
+  <div *ngIf="loggedInUserDisplayName != '' && loggedInUserDisplayName != null" class="col-xs-offset-6 col-xs-1 col-sm-offset-9 col-sm-1 col-md-offset-8 col-md-2 dropdown">
+    <button class="btn btn-link dropdown-toggle" type="button" data-toggle="dropdown">
+      <font color="white"><b>{{ loggedInUserDisplayName }}</b></font><b class="caret"></b>
+    </button>
+    <ul class="dropdown-menu">
+      <li><a [ngClass]="['cursorPtr']" (click)="getMenuList()">{{'header-menu.home_label'|translate}}</a></li>
+      <li><a [ngClass]="['cursorPtr']" (click)="logout()">{{'header-menu.logout_label'|translate}}</a></li>
+    </ul>
+  </div>
+</div>

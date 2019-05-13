@@ -1,0 +1,228 @@
+<!-- rating related content -->
+<div class="container" id="ratingMainPanel">
+
+	<!-- rating header -->
+	<div class="row" style="padding-left: 2%;">
+		<div class="col-md-3 ratingScreenTimeInfoDiv">
+			<b>First level of 2018, Class 2 Testing - March 2018</b>
+		</div>
+		<div class="col-md-5 ratingScreenTimeDiv">
+			<div class="row">
+				<div class="col-md-3 ratingScreenPinkTimeDiv">
+					Rated / Total
+				</div>
+				<div class="col-md-3">
+					0/1 Rated
+				</div>
+				<div class="col-md-3 ratingScreenPinkTimeDiv">
+					Elapsed Time
+				</div>
+				<div class="col-md-3">
+					00:00:52
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- End of rating header -->
+
+	<div class="col-md-12" style="padding-right: 10px;">
+		<div class="panel panel-primary">
+
+			<!-- rating heading section -->
+			<div class="panel-heading">
+				<h3 class="panel-title">
+					<b style="text-align: left;">{{'rating-label-list.rating_heading'|translate}}</b>
+				</h3>
+			</div>
+			<!-- End of rating heading section -->
+
+			<div class="panel-body" style="padding: 25px;">
+				<div class="row">
+
+					<!-- Left panel to show test paper booklet PDF -->
+					<div class="col-md-6" id="ratingLeftPanel">
+						<div>
+							<div class="row margin-top7px" id="testPaperPreviewUnit1Div" style="">
+								<div class="col-md-12">
+									<div class="testPaperPreviewDivCls">
+										<object [data]="currentTestPaperFileURL" type="application/pdf" width="100%" height="100%"></object>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- End of left panel -->
+
+					<!-- Right panel to show rating unit information -->
+					<div class="col-md-6" id="ratingRightPanel">
+						<div class="ratingTabsDiv">
+
+							<!-- Rating unit panels -->
+							<div class="row">
+								<div class="col-md-12">
+									<div class="tabs">
+										<ul class="nav nav-tabs ratingNavUl">
+											<li *ngFor="let ratingUnit of ratingUnits" (click)="selectTab(ratingUnit)" [class.active]="ratingUnit.active">
+												<a [class.activeSuccessRatingUnit]="(ratingUnit.active && !isSubmitted) || (ratingUnit.active && isSubmitted && ratingUnitValidationStatus.get(ratingUnit.ratingUnitId))" [class.defaultRatingUnit]="!isSubmitted || (isSubmitted && ratingUnitValidationStatus.get(ratingUnit.ratingUnitId))" [class.pendingRatingUnit]="!ratingUnit.active && isSubmitted && !ratingUnitValidationStatus.get(ratingUnit.ratingUnitId)" [class.pendingActiveRatingUnit]="ratingUnit.active && isSubmitted && !ratingUnitValidationStatus.get(ratingUnit.ratingUnitId)">{{ratingUnit.ratingUnitName}}</a>
+											</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+							<!-- End of rating unit panels -->
+
+							<div class="tab-content ratingTabContent">
+								<div *ngFor="let ratingUnit of ratingUnits" class="pane">
+									<div *ngIf="ratingUnit?.active == true">
+										<div [hidden]="active" class="pane">
+
+											<!-- Answers heading section -->
+											<div class="sectionDividerHeader"><b>{{'rating-label-list.answers_label'|translate}}</b></div>
+											<!-- End of answers heading -->
+
+											<div class="row">
+												<div class="col-md-12" align="right">
+													<button type="button" class="btn btn-default hamburgerBtn">
+														<div style="float: left;">
+															<div class="bar1"></div>
+															<div class="bar2"></div>
+															<div class="bar3"></div>
+														</div>
+														<div class="marginLeft-4px" style="float: right;">
+															<span class="caret hamburgerBtnCaretSpan"></span>
+														</div>
+													</button>
+												</div>
+											</div>
+
+											<!-- Rating unit answers section -->
+											<div class="ratingAnswerDiv" *ngFor="let ratingItem of currentRatingUnitItemAnswers; let j=index">
+												<div class="panel panel-primary">
+													<div class="panel-heading" style="text-align: right">
+														<span style="float:left">{{ratingItem.testSetItemId}}</span>
+														<span>
+															<div class="btn-group">
+																<a class="btn dropdown-toggle" style="color:white;" data-toggle="dropdown" href="#">
+																	Technical Information <span class="caret"></span>
+																</a>
+																<div class="dropdown-menu" style="color: #000000">
+																	<div class="ratingAnsTechInfoBlocks"><b>Test Set ID</b></div>
+																	<div class="ratingAnsTechInfoData">{{ratingItem.testSetId}}</div>
+																	<div class="ratingAnsTechInfoBlocks"><b>Rating Assignment Block ID</b></div>
+																	<div class="ratingAnsTechInfoData">{{ratingItem.ratingAssignmentBlockId}}</div>
+																	<div class="ratingAnsTechInfoBlocks"><b>Answer ID</b></div>
+																	<div class="ratingAnsTechInfoData">{{ratingItem.testSetItemAnswerId}}</div>
+																</div>
+															</div>
+														</span>
+													</div>
+												</div>
+											</div>
+											<!-- End of rating unit answers -->
+
+											<div class="panel panel-default table-responsive" >
+												<div id="waveform" class="absolute"></div>
+												<div align="center">
+													<button (click)="togglePlay()" style="border:none;background:none;padding:0;padding-top: 20px;opacity: 0.7;">
+														<span class="far fa-play-circle" id="audioIcon" style="font-size: 75px;color:red;"></span>
+													</button>
+												</div>
+
+												<div style="text-align: center; opacity: 0.7;">
+													<div class="col-xs-12">
+														<input id="slider" type="range" min="1" max="200" value="1" style="width: 100%" />
+													</div>
+												</div>
+												<div style="height:40px;background-color:#2980b9;"></div>
+											</div>
+
+											<!-- Rating unit instructions section -->
+											<div class="row margin-top7px">
+												<!-- Rating unit instructions heading section -->
+												<div class="col-md-12">
+													<div class="inlineTogglerDiv">
+														<p>{{'rating-label-list.rating_instruction_label'|translate}}</p>
+														<div class="inline"></div>
+														<a data-toggle="collapse" (click)="getRatingInstructionsManual(ratingUnit.ratingUnitId)" data-target="#RatingStructureAndOtherInfoUnit1Div">
+															<span class="glyphicon glyphicon-menu-down" id="ratingStrucUnit1CaptionSpan"></span>
+														</a>
+													</div>
+												</div>
+												<!-- End of rating unit instructions heading -->
+
+												<!-- Rating unit instructions PDF section -->
+												<div class="row margin-top7px" id="RatingStructureAndOtherInfoUnit1Div" class="collapse">
+													<div class="col-md-12">
+														<div class="RatingStructureAndOtherInfoDivCls">
+															<object [data]="currentRatingInstructionsFileURL" type="application/pdf" width="100%" height="100%"></object>
+														</div>
+													</div>
+												</div>
+												<!-- End of rating unit instructions PDF -->
+											</div>
+											<!-- End of rating unit instructions -->
+
+											<!-- Rating unit context section -->
+											<div style="overflow-x: auto;" class="margin-top7px">
+												<div *ngIf = "ratingUnitValidationStatus.get(ratingUnit.ratingUnitId) == false && isSubmitted == true" class="ratingUnitValidationErrorMessage">
+													{{'rating-label-list.rating_instruction_information'|translate}} {{ratingUnit.ratingUnitName}}
+												</div>
+												<div *ngIf="currentRatingUnitContext?.length > 0">
+													<table class="table table-striped table-bordered" style="width: 100%;border: 1px;">
+														<thead style="background-color: #336797;color: #ffffff; vertical-align: middle;">
+														<tr>
+															<th scope="col" style="width: 50%">{{'rating-label-list.context_label'|translate}} - {{ratingUnit.ratingUnitName}}</th>
+															<th class="text-center" *ngFor="let value of currentRatingUnitContext[0].ratingOptionsArray; let i=index">{{i}}</th>
+															<th scope="col" class="text-center" style="width: 7%">{{'rating-label-list.unattempted_label'|translate}}</th>
+														</tr>
+														</thead>
+														<tbody>
+														<tr *ngFor="let context of currentRatingUnitContext; let i=index">
+															<td>{{context.contextName}}</td>
+															<td *ngFor="let checkPoint of context.ratingOptionsArray; let j=index" align="center">
+																<div *ngIf="checkPoint != -1">
+																	<input type="radio" name="{{context.contextName}}" value="{{checkPoint}}" (click)="updateRating(ratingUnit.ratingUnitId,context.contextId, checkPoint)" [checked]="(checkPoint == ratingUnitContextSelectionMap.get(ratingUnit.ratingUnitId + ':' + context.contextId))" [disabled]="disable"/>
+																</div>
+															</td>
+															<td *ngIf="i == 0" [attr.rowspan]="currentRatingUnitContext?.length" class="text-center tdVerticalAlignMiddle">
+																<input type="checkbox" name="unattempted" id="6" (change)="enableDisableRadioButton($event, ratingUnit.ratingUnitId)" [checked]="ratingUnitUnAttemptedStatus.get(ratingUnit.ratingUnitId)">
+															</td>
+														</tr>
+														</tbody>
+													</table>
+												</div>
+											</div>
+											<!-- End of rating unit context section -->
+
+											<div class="row margin-top7px">
+												<div class="col-md-12">
+													<label class="checkbox-inline"><input type="checkbox" id="pendingCheckbox" name="pendingCheckbox" />Pending</label>
+												</div>
+											</div>
+
+											<div class="row margin-top7px">
+												<div class="col-md-6">
+													<button type="button" class="btn btn-primary">{{'rating-label-list.rating_instruction_comment'|translate}}</button>
+												</div>
+												<div class="col-md-6" align="right">
+													<label class="checkbox-inline"><input type="checkbox" id="manageCheckbox" name="manageCheckbox" />{{'rating-label-list.rating_instruction_manage'|translate}}</label>
+												</div>
+											</div>
+
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="row margin-top7px text-center">
+								<button type="button" class="btn btn-primary" (click)="validateRating()">{{'rating-label-list.submit_rating'|translate}}</button>&nbsp;
+								<button type="button" class="btn btn-primary" (click)="quitRating()">{{'rating-label-list.quit_rating'|translate}}</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- End of rating related content -->

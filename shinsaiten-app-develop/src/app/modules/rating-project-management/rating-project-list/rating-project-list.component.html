@@ -1,0 +1,153 @@
+<!--<nav class="navbar navbar-default" style="margin-top:-51px;">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#" style="color: white; font-weight: bold;font-style: italic;font-size: 26px; margin-top: 7px;">
+      ShinSaiten </a>
+    </div>
+    <ul class="nav navbar-nav allTab">
+      <li class="dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">EmpID-001<b class="caret"></b></a>
+        <ul class="dropdown-menu">
+          <li><a href="editProfile.html">Edit Profile</a></li>
+          <li><a href="changePassword.html">Change Password</a></li>
+          <li><a href="login.html">Logout</a></li>
+        </ul>
+      </li>
+      <!-- <li><a href="#" style="margin-top:7px;">TEAP_001</a></li> 
+      <li><a href="#"><i class="fa fa-th fa-2x"></i></a></li>
+      <li><a href="#"><i class="fa fa-bell fa-2x"></i></a></li>
+      <li><a href="adminMenu.html"><i class="fa fa-home fa-2x"></i></a></li>
+    </ul>
+  </div>
+</nav>
+<br/>-->
+<head>
+<script>
+	function toggleArrow(divId) {
+		$("#" + divId).find(".arrow-up, .arrow-down").toggle();
+	}
+</script>
+</head>
+<div class="container"  id="ratingMainPanel">
+  <div class="col-md-12" style="padding-right: 10px;">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+
+          <b style="text-align: left;">{{'rating-project-list.panel_header'|translate}}</b>
+        </h3>
+      </div>
+		
+		<div class="panel-body" style="padding: 25px;">
+        <form class="form-horizontal form-content" id="Search" name="Search">       
+          <div class="row">
+            <div class="col-md-6" style="padding-left: 0;">
+            </div> 
+            <div class="col-md-6" style="padding-right: 0px;">
+              <div class="col-md-9">
+                <input type="text" [(ngModel)]="searchValue" class="form-control form-inline" placeholder="{{'rating-project-list.search_button_value'|translate}}"
+                  name="searchValue" required>
+              </div>
+              <div class="col-md-3">
+                <button class="btn btn-primary btn-block" (click)="serchValue()">{{'rating-project-list.search_button_value'|translate}}</button>
+              </div>
+            </div>
+          </div>
+        </form>
+       
+       <!--<div class="row">
+          <div class="col-md-12 addNewRaterBtn">
+            <a class="btn btn-primary btn-md pull-right" href="">{{'rating-project-list.add_new_rating_project_link'|translate}}</a>
+          </div>
+        </div>-->
+         
+        <br>
+        <div class="row" style="overflow-x:auto;">
+          <div class="col-md-12" style="padding-left:20px;">
+            <div class="loading-indicator">
+              <mat-spinner *ngIf="isLoadingResults" class></mat-spinner>
+            </div>
+
+            <div *ngIf="dataSource.data.length === 0" style="color: red; text-align: center;">
+              {{'rating-project-list.no_records_found_message'|translate}}
+            </div>
+            <div class="mat-elevation-z8" *ngIf="!isLoadingResults && dataSource.data.length > 0 ">
+              <mat-table #table [dataSource]="dataSource">
+
+                <!-- ratingProjectName Column -->
+                
+                <ng-container matColumnDef="ratingProjectName">
+                
+                  <mat-header-cell class="pointer" *matHeaderCellDef (click)="sortSet('ratingProjectName')" >{{'rating-project-list.project_name'|translate}}&nbsp;
+                  	<i class="fa" [ngClass]="{'fa-sort': sortBy != 'ratingProjectName', 
+                        'fa-sort-asc': (sortBy == 'ratingProjectName' && !isDesc), 
+                        'fa-sort-desc': (sortBy == 'ratingProjectName' && isDesc) }"
+    					aria-hidden="true">     					
+    				</i>
+				</mat-header-cell>
+                  <mat-cell  *matCellDef="let element"><a [ngClass]="['handCursor']" (click)="loadTestSet(element.ratingProjectId)"> {{element.ratingProjectName}} </a></mat-cell>
+                </ng-container>
+                
+
+                <!--   fromDate Column -->
+                <ng-container matColumnDef="fromDate">
+                  <mat-header-cell  class="pointer" *matHeaderCellDef (click)="sortSet('fromDate')">{{'rating-project-list.from_date'|translate}}&nbsp;
+					<i class="fa" [ngClass]="{'fa-sort': sortBy != 'fromDate', 
+                        'fa-sort-asc': (sortBy == 'fromDate' && !isDesc), 
+                        'fa-sort-desc': (sortBy == 'fromDate' && isDesc) }"
+    					aria-hidden="true"> 
+    				</i>
+   				</mat-header-cell>
+                  <mat-cell *matCellDef="let element"> {{element.fromDate | date:'yyyy-MM-dd HH:mm:ss'}} </mat-cell>
+                </ng-container>
+                <!--  toDate Column -->
+                <ng-container matColumnDef="toDate">
+                  <mat-header-cell class="pointer" *matHeaderCellDef (click)="sortSet('toDate')">{{'rating-project-list.to_date'|translate}}&nbsp;
+                  	<i class="fa" [ngClass]="{'fa-sort': sortBy != 'toDate', 
+                        'fa-sort-asc': (sortBy == 'toDate' && !isDesc), 
+                        'fa-sort-desc': (sortBy == 'toDate' && isDesc) }"
+    					aria-hidden="true"> 
+    				</i>
+  				</mat-header-cell>
+                  <mat-cell *matCellDef="let element"> {{element.toDate | date:'yyyy-MM-dd HH:mm:ss'}} </mat-cell>
+                </ng-container>
+
+                <!-- setUp Column -->
+                <ng-container matColumnDef="setUp">
+                  <mat-header-cell *matHeaderCellDef>{{'rating-project-list.set_up'|translate}}</mat-header-cell>
+                  <mat-cell *matCellDef="let element"> {{element.setUp}} </mat-cell>
+                </ng-container>
+                <!-- execution  Column -->
+                <ng-container matColumnDef="execution">
+                  <mat-header-cell *matHeaderCellDef>{{'rating-project-list.execution'|translate}}</mat-header-cell>
+                  <mat-cell *matCellDef="let element"> {{element.execution}} </mat-cell>
+                </ng-container>
+           
+
+                <!--Row Header-->
+                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+              </mat-table>
+              <mat-paginator #paginator [pageSize]="pageSize" [pageSizeOptions]="PAGINATION_DROP_DOWN" [showFirstLastButtons]="true" [length]="resultsLength"
+                [pageIndex]="currentPage" (page)="pageEvent = handlePage($event)">
+              </mat-paginator>
+            </div>
+            <!-- Copyright 2018 Google Inc. All Rights Reserved.
+                    Use of this source code is governed by an MIT-style license that
+                    can be found in the LICENSE file at http://angular.io/license -->
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!--<div class="navbar navbar-inverse navbar-fixed-bottom">
+  <p class="footerClass" align="center">
+    Powered by&nbsp;<span class="footerJiem"><b>JIEM</b></span>
+  </p>
+</div>-->

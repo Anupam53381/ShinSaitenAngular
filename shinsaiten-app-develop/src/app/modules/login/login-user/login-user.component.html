@@ -1,0 +1,56 @@
+<div class="container">
+
+	<form class="form-horizontal form-content" id="form" name="form" (ngSubmit)="f.form.valid && loginUser()" #f="ngForm" novalidate>
+		<div class="row">
+			<div
+				class="col-xs-offset-4 col-xs-5 col-sm-offset-5 col-sm-5 col-md-offset-4 col-md-4">
+				<div align="center" *ngIf="errorMessage" [ngClass]="'red'"> {{ errorMessage }}</div>
+
+				<div class="panel panel-primary">
+					<div class="panel-heading">
+						<b>Login</b>
+					</div>
+					<div class="panel-body" align="center">
+						<!-- <center> -->
+							<div class="form-group" >
+								<p class="text-left" style="padding-left: 30px;">
+									<label for="inputEmail">Login Id</label>
+								</p>
+								<input [(ngModel)]="user.userId" placeholder="Login Id"
+									name="userId" class="form-control-login-menu"  id="userId"
+									 #userId="ngModel" required maxlength="50"  >
+								<div *ngIf="f.submitted && userId.invalid" >
+                            		<div [ngClass]="'red'" *ngIf="userId.errors.required">{{'login-error-list.login_id_blank_label'|translate}}</div>
+                            		<!-- <div [ngClass]="'red'" *ngIf="userId.errors.minlength">Login Id must be at least 4 characters</div> -->
+                            		<div [ngClass]="'red'" *ngIf="userId.errors.maxlength">{{'login-error-list.login_id_max_length_label'|translate}}</div>
+                        		</div>
+							</div>
+
+							<div class="form-group">
+								<p class="text-left" style="padding-left: 30px;">
+									<label for="inputPassword">Password</label>
+								</p>
+								<input type="password" [(ngModel)]="user.password" placeholder="Password"
+									name="password" class="form-control-login-menu" id="password"  
+									#password="ngModel"  required minlength="4" maxlength="50">
+								<div *ngIf="f.submitted && password.invalid" >
+                            		<div [ngClass]="'red'" *ngIf="password.errors.required">{{'login-error-list.password_blank_label'|translate}}</div>
+                            		<div [ngClass]="'red'" *ngIf="password.errors.minlength">{{'login-error-list.password_min_length_label'|translate}}</div>
+                            		<div [ngClass]="'red'" *ngIf="password.errors.maxlength">{{'login-error-list.password_max_length_label'|translate}}</div>
+                        		</div>
+							</div>
+							<!--  <button class="btn btn-primary" (click)="loginUser()" >Log In</button> -->
+							<button class="btn btn-primary">Login</button>
+							<div class="forgotInfoDiv">
+								<a href="#">Forgot Login Id</a>&nbsp;&nbsp;<span class="vl"></span>&nbsp;&nbsp;<a
+									href="#">Forgot Password</a>
+							</div>
+						<!-- </center> -->
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+
+
+</div>

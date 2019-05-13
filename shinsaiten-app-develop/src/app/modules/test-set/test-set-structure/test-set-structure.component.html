@@ -1,0 +1,41 @@
+<!--<div class="navbar navbar-inverse navbar-fixed-top" style="min-height: 37px;height: 37px;">
+  <div class="col-xs-1 col-sm-1 col-md-2">
+    <font face="Bookman Old Style" color="white" size="5"><b><i>ShinSaiten</i></b></font>
+  </div>
+  <div class="col-xs-offset-6 col-xs-1 col-sm-offset-9 col-sm-1 col-md-offset-8 col-md-2 dropdown">
+    <button class="btn btn-link dropdown-toggle" type="button" data-toggle="dropdown">
+      <font color="white"><b>Rater_SR65</b></font><b class="caret"></b>
+    </button>
+    <ul class="dropdown-menu">
+      <li><a href="menu.html">Menu</a></li>
+      <li><a href="#">PC Config Check</a></li>
+      <li class="divider"></li>
+      <li><a href="editProfile.html">Edit Profile</a></li>
+      <li><a href="changePassword.html">Change Password</a></li>
+      <li><a href="login.html">Logout</a></li>
+    </ul>
+  </div>
+</div>-->
+<div class="container"  id="ratingMainPanel">
+  <div class="col-md-12">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          <b style="text-align: left;">Add Test Structure</b>
+        </h3>
+      </div>
+
+      <div class="panel-body" style="padding: 25px;">
+        <app-upload-test-set-structure (uploadedFileRecords)="csvRecordsHandler($event)"></app-upload-test-set-structure>
+        <app-test-set-structure-file-preview (validationFail)="validationFailHandler($event)" (resetPage)="resetPageHandler()"></app-test-set-structure-file-preview>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+<!--<div class="navbar navbar-inverse navbar-fixed-bottom">
+  <p class="footerClass" align="center">
+    Powered by&nbsp;<span class="footerJiem"><b>JIEM</b></span>
+  </p>
+</div>-->

@@ -1,0 +1,50 @@
+<div class="row margin-left23Per">
+  <div class="col-md-3" align="right">
+    <label class="control-label">{{'upload-test-set-structure.test_set_name_lebel'|translate}}</label>
+  </div>
+  <div class="col-md-9">
+    <span>&nbsp;{{testSetName}}</span>
+  </div>
+</div>
+<div class="row marginTop-10px margin-left23Per">
+  <div class="col-md-3" align="right">
+    <label class="control-label">{{'upload-test-set-structure.choose_file_lebel'|translate}}</label>
+  </div>
+  <div class="col-md-4">
+    <div class="fileinputs">
+      <input type="file" #fileImportInput id="txtFileUpload" (change)="fileChangeListener($event)" accept=".csv" class="uploadFileInput form-control"
+        (click)="fileReset()" />
+      <div class="fakefile">
+        <button class="btn browseBtnFile">{{'upload-test-set-structure.browse_file_button'|translate}}</button>
+        <input class="form-control" #browseDnDFile id="browseDnDFile" placeholder=" OR Drag 'n' Drop Here" readonly />
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row userRow text-center">
+  <div class="col-md-12">
+    <!--  <button type="button" id="downloadCsvBtn" class="btn btn-primary">Download CSV Template</button>&nbsp; -->
+    <button type="button" id="btnSaveUploadCSV" class="btn btn-primary" (click)="showFilePreview()">{{'upload-test-set-structure.upload_button'|translate}}</button>&nbsp;
+    <button type="button" id="btnSaveUploadCSV" class="btn btn-primary" (click)="redirectToTestSetList()">{{'upload-test-set-structure.goto_test_set_list_button'|translate}}</button>
+  </div>
+</div>
+<hr />
+<div *ngIf="validationFail" style="color: red; text-align: center;">
+  {{'upload-test-set-structure.'+validationErrorMessages|translate}}
+</div>
+
+<div class="allErrorMsg" [hidden]="doNotShowValiadtionError">
+
+  <div class="errorMsgContainer">
+    <div *ngFor="let errorRow of errorBeanArray" align="text-center">
+      <span *ngIf="errorRow.messageCode !== '00' " style="white-space: pre-wrap">
+        <b>{{'upload-test-set-structure.row'|translate}} {{errorRow.rowId}}: </b>{{'upload-test-set-structure.'+errorRow.messageCode|translate}}<br />
+      </span>
+      <ng-container *ngIf="errorRow.messageCode === '00' ">
+        <span *ngFor="let errorColumn of errorRow.errorColumList">
+          <b>{{'upload-test-set-structure.row'|translate}} {{errorRow.rowId}}: </b>{{'upload-test-set-structure.'+errorColumn.messageCode|translate}}<br />
+        </span>
+      </ng-container>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,6 @@
+<div *ngIf="userRole === 'RATER_ADMIN'">
+	<app-rater-admin-home></app-rater-admin-home>
+</div>
+<div *ngIf="userRole === 'RATER'">
+	<app-rater-home></app-rater-home>
+</div>

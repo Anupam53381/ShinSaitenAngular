@@ -1,0 +1,10 @@
+<div *ngIf="showDefaultHeader == true; else raterHeader">
+    <app-header></app-header>
+</div>
+
+<ng-template #raterHeader>
+    <rater-header></rater-header>
+</ng-template>
+
+<router-outlet></router-outlet>
+<app-footer></app-footer>

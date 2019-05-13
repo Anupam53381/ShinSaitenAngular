@@ -1,0 +1,227 @@
+<!--<div class="navbar navbar-inverse navbar-fixed-top" style="min-height: 37px;height: 37px;">
+  <div class="col-xs-1 col-sm-1 col-md-2">
+    <font face="Bookman Old Style" color="white" size="5"><b><i>ShinSaiten</i></b></font>
+  </div>
+  <div class="col-xs-offset-6 col-xs-1 col-sm-offset-9 col-sm-1 col-md-offset-8 col-md-2 dropdown">
+    <button class="btn btn-link dropdown-toggle" type="button" data-toggle="dropdown">
+      <font color="white"><b>Rater_SR65</b></font><b class="caret"></b>
+    </button>
+    <ul class="dropdown-menu">
+      <li><a href="menu.html">Menu</a></li>
+      <li><a href="#">PC Config Check</a></li>
+      <li class="divider"></li>
+      <li><a href="editProfile.html">Edit Profile</a></li>
+      <li><a href="changePassword.html">Change Password</a></li>
+      <li><a href="login.html">Logout</a></li>
+    </ul>
+  </div>
+</div>-->
+
+<div *ngIf="isSuccess" style="text-align: center;">
+  <div class="col-md-8" style="color: red; margin-left: 200px;padding-bottom: 5px;">
+    {{testSetName}} {{'add-testset.testset_added_successfully'|translate}}
+    <br>
+  </div>
+</div>
+<div *ngIf="fileUploadedSuccessfully" style="color: red; text-align: center;">
+  {{'upload-testset.file_uploaded_successfully'|translate}}
+  
+</div>
+
+<div class="container"  id="ratingMainPanel">
+  <div class="col-md-12" style="padding-right: 10px;">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          <b style="text-align: left;">{{'testset-list.panel_header'|translate}}</b>
+        </h3>
+      </div>
+
+
+      <form class="form-horizontal form-content" id="" name="" enctype="multipart/form-data">
+        <input type="hidden" id="rowCounter" name="rowCounter" value="1">
+        <div class="panel-body" style="padding: 25px;">
+          <div class="row">
+            <div class="col-md-6">
+              <a class="btn btn-link" id="btnAddNewTestSet" data-toggle="modal" data-target="#modalManualTestSetCreation"
+                (click)="showAddTestSetComponent()"><span class="glyphicon glyphicon-plus"></span>&nbsp;{{'testset-list.add_single_test_set_link'|translate}}</a>
+            </div>
+          </div>
+
+
+          <div class="row btnAddMargin">
+            <div class="col-md-6">
+              <a class="btn btn-link" id="btnAddNewTestSetByCSV" (click)="openCsvFileUploadPop()"><span class="glyphicon glyphicon-cloud-upload"></span>&nbsp;{{'testset-list.add_bulk_test_set_link'|translate}}</a>
+            </div>
+          </div>
+        
+
+          <hr />
+          
+          <br>
+          
+          <div class="row" style="overflow-x:auto;">
+          <div class="col-md-12" style="padding-left:20px;">
+            <div class="loading-indicator" >
+              <mat-spinner *ngIf="isLoadingResults" class ></mat-spinner>
+            </div>
+
+            <div *ngIf="dataSource !== null then gridDataTemplate">              
+            </div>
+            
+            <ng-template #gridDataTemplate>
+
+            <div *ngIf="dataSource.data.length === 0" style="color: red; text-align: center;">
+              {{'testset-list.no_records_found_message'|translate}}
+            </div>
+            <div class="mat-elevation-z8" *ngIf="!isLoadingResults && dataSource.data.length > 0 ">
+              <mat-table #table [dataSource]="dataSource">
+
+                <!-- Test Set Name Column -->
+                <ng-container matColumnDef="testSetNameData">
+                  <mat-header-cell *matHeaderCellDef>{{'testset-list.test_set_name_header'|translate}}</mat-header-cell>
+                  <mat-cell *matCellDef="let element"> {{element.testSetName}} </mat-cell>
+                </ng-container>
+
+                <!--   Test Structure Column -->
+                <ng-container matColumnDef="testStructureStatus">
+                  <mat-header-cell *matHeaderCellDef>{{'testset-list.test_struture_status_header'|translate}}</mat-header-cell>
+                  <mat-cell *matCellDef="let element"> 
+	                  <div *ngIf="element.testStructureStatus === CommonConstant.STATUS_INCOMPLETE">
+	                  	<a [ngClass]="['handCursor']" (click)="loadTestSetStructure(element.testSetId,element.testSetName)">                        
+                        <img src= 'assets/img/MSExcelRed.png'  [ngClass]="['testSetListIcons']">                       
+                      </a>
+	                  </div>
+                    <div *ngIf="element.testStructureStatus === CommonConstant.STATUS_PARTIAL_COMPLETE">
+                      <img src= 'assets/img/MSExcelYellow.png'  [ngClass]="['testSetListIcons']">                      
+                    </div>
+                    <div *ngIf="element.testStructureStatus === CommonConstant.STATUS_COMPLETE">
+                        <img src= 'assets/img/MSExcelGreen.png'  [ngClass]="['testSetListIcons']">                      
+                    </div>
+                  </mat-cell>                 
+                </ng-container>
+                
+                <!--   Rating Structure Column -->
+                <ng-container matColumnDef="ratingStructureStatus">
+                  <mat-header-cell *matHeaderCellDef>{{'testset-list.rating_structure_status_header'|translate}}</mat-header-cell>
+                  <mat-cell *matCellDef="let element"> <!--{{element.ratingStructureStatus}} --> </mat-cell>
+                </ng-container>
+
+                <!--  Test Image Column -->
+                <ng-container matColumnDef="testImageStatus">
+                  <mat-header-cell *matHeaderCellDef>{{'testset-list.test_image_status_header'|translate}}</mat-header-cell>
+                  <mat-cell *matCellDef="let element"> <!--{{element.testImageStatus}} --> </mat-cell>
+                </ng-container>
+                
+                <!-- QC Column -->
+                <ng-container matColumnDef="qcStatus">
+                  <mat-header-cell *matHeaderCellDef>{{'testset-list.qc_status_header'|translate}}</mat-header-cell>
+                  <mat-cell *matCellDef="let element"> <!--{{element.qcStatus}} --> </mat-cell>
+                </ng-container>
+                
+                 <!-- Import / Export Column -->
+                <ng-container matColumnDef="importExportStatus">
+                  <mat-header-cell *matHeaderCellDef>{{'testset-list.import_export_status_header'|translate}}</mat-header-cell>
+                  <mat-cell *matCellDef="let element"> <!--{{element.importExportStatus}} --> </mat-cell>
+                </ng-container>        
+             
+                <!--Row Header-->
+                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+              </mat-table>
+              <mat-paginator #paginator [pageSize]="pageSize" [pageSizeOptions]="PAGINATION_DROP_DOWN" [showFirstLastButtons]="true" [length]="resultsLength"
+                [pageIndex]="pageIndex" (page)="pageEvent = handlePage($event)">
+              </mat-paginator>
+            </div>
+            <!-- Copyright 2018 Google Inc. All Rights Reserved.
+                    Use of this source code is governed by an MIT-style license that
+                    can be found in the LICENSE file at http://angular.io/license -->
+          </ng-template>
+          </div>
+        </div>
+          
+          <!-- <div class="row">
+            <div class="col-md-6">
+              <nav>
+                <ul class="pagination pagination-sm">
+                  <li class="page-item"><span class="page-link">6 results</span></li>
+                  <li class="page-item disabled"><a class="page-link" href="#" tabindex="-1">&laquo;</a></li>
+                  <li class="page-item active"><a class="page-link" href="#">1
+                      <span class="sr-only">(current)</span>
+                    </a></li>
+                  <li class="page-item"><a class="page-link" href="#">2</a></li>
+                  <li class="page-item"><a class="page-link" href="#">&raquo;</a>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+
+          <div style="overflow-y:auto;">
+            <table id="mainTable" class="table table-striped table-bordered" style="width: 100%;border: 1px;">
+              <thead style="background-color: #336797;color: #ffffff; vertical-align: middle;">
+                <tr>
+                  <th scope="col" class="text-center tdVerticalAlignMiddle" style="width: 40%">Test Set Name</th>
+                  <th scope="col" class="text-center tdVerticalAlignMiddle" style="width: 20%">Test Structure</th>
+                  <th scope="col" class="text-center tdVerticalAlignMiddle" style="width: 20%">Rating Structure</th>
+                  <th scope="col" class="text-center tdVerticalAlignMiddle" style="width: 20%">Test Image</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="text-center tdVerticalAlignMiddle">2018 1st Round Grade 1 / pre-1</td>
+                  <td class="text-center tdVerticalAlignMiddle"></td>
+                  <td class="text-center tdVerticalAlignMiddle"></td>
+                  <td class="text-center tdVerticalAlignMiddle"></td>
+                </tr>
+                <tr>
+                  <td class="text-center tdVerticalAlignMiddle">2018 1st Round Grade 1 / pre-2 / 3</td>
+                  <td class="text-center tdVerticalAlignMiddle"></td>
+                  <td class="text-center tdVerticalAlignMiddle"></td>
+                  <td class="text-center tdVerticalAlignMiddle"></td>
+                </tr>
+                <tr>
+                  <td class="text-center tdVerticalAlignMiddle">2018 1st Round Grade 4 / 5</td>
+                  <td class="text-center tdVerticalAlignMiddle"></td>
+                  <td class="text-center tdVerticalAlignMiddle"></td>
+                  <td class="text-center tdVerticalAlignMiddle"></td>
+                </tr>
+                <tr>
+                  <td class="text-center tdVerticalAlignMiddle">2017 1st Round Grade 1 / Pre-1</td>
+                  <td class="text-center tdVerticalAlignMiddle"></td>
+                  <td class="text-center tdVerticalAlignMiddle"></td>
+                  <td class="text-center tdVerticalAlignMiddle"></td>
+                </tr>
+                <tr>
+                  <td class="text-center tdVerticalAlignMiddle">2017 1st Round Grade 2 / Pre-2 / 3</td>
+                  <td class="text-center tdVerticalAlignMiddle"></td>
+                  <td class="text-center tdVerticalAlignMiddle"></td>
+                  <td class="text-center tdVerticalAlignMiddle"></td>
+                </tr>
+                <tr>
+                  <td class="text-center tdVerticalAlignMiddle">2017 1st Round Grade 5 / 1</td>
+                  <td class="text-center tdVerticalAlignMiddle"></td>
+                  <td class="text-center tdVerticalAlignMiddle"></td>
+                  <td class="text-center tdVerticalAlignMiddle"></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>-->
+        </div>
+      </form>
+    </div>
+  </div>
+  <app-add-test-set (onSuccess)="onSuccess($event)"></app-add-test-set>
+  <app-upload-testset (fileUploadedEvent)="fileUploadedEventHandler($event)"></app-upload-testset>
+
+
+</div>
+<!--<div class="navbar navbar-inverse navbar-fixed-bottom">
+  <p class="footerClass" align="center">
+    Powered by&nbsp;<span class="footerJiem"><b>JIEM</b></span>
+  </p>
+</div>-->
+<!--Button for showing the upload file model-->
+<button style="visibility: hidden;" class="btn btn-danger" #modelUploadTestSetcsv id="delete-node" name="button"
+  data-toggle="modal" data-target="#modalUploadTestSetCSV"></button>

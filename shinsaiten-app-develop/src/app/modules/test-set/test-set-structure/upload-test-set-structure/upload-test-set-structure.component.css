@@ -1,0 +1,13 @@
+#browseDnDFile[readonly] {
+    background-color: white;
+     width: 75%;
+     margin-left: 32%;
+     border: 1px dashed gray;
+     border-radius: 0px 5px 5px 0px;
+  }
+  .browseBtnFile {
+  position: absolute;
+  border-radius: 5px 0px 0px 5px;
+  color: white;
+  background-color: gray;
+  }

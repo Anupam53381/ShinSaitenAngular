@@ -1,0 +1,29 @@
+<div class="navbar navbar-inverse navbar-fixed-top" style="min-height: 37px;height: 37px;">
+  <div class="col-xs-1 col-sm-1 col-md-2">
+    <font face="Bookman Old Style" color="white" size="5"><b><i>ShinSaiten</i></b></font>
+  </div>
+</div>
+
+<form (ngSubmit)="gotoHome()" #f="ngForm" novalidate></form>
+<div class="container" align="center">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="error-template">
+        <h1>{{'error-page-body.error_heading_label'|translate}}</h1>
+        <h3>{{'error-page-body.error_body_label'|translate}}</h3>
+        <div class="error-details">
+          {{'error-page-body.error_end_label'|translate}} <br />
+          <a [ngClass]="['handCursor']" (click)="goToHome()" class="btn btn-info">{{'error-page-body.redirect_label'|translate}}</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="navbar navbar-inverse navbar-fixed-bottom">
+  <p class="footerClass" align="center">
+    Powered by&nbsp;<span class="footerJiem"><b>JIEM</b></span>
+  </p>
+</div>
+<!--Button for showing the upload file model-->
+<button style="visibility: hidden;" class="btn btn-danger" #modelUploadTestSetcsv id="delete-node" name="button"
+  data-toggle="modal" data-target="#modalUploadTestSetCSV"></button>

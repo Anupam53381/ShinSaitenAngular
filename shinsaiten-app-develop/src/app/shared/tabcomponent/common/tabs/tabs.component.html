@@ -1,0 +1,9 @@
+<div class="tabs">
+    <ul class="nav nav-tabs ratingNavUl">
+        <li *ngFor="let tab of tabs" (click)="selectTab(tab)" [class.active]="tab.active">
+            <a style="color:white" [ngClass]="['cursorPtr']">{{tab.title}}</a>
+        </li>
+    </ul>
+
+    <ng-content></ng-content>
+</div>

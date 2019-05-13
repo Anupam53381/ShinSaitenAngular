@@ -1,0 +1,79 @@
+<form #f="ngForm" (ngSubmit)="submitTestSetStructure()">
+  <div id="previewDiv" [hidden]="doNotShoWFilePreview">
+
+    <div class="marginTop-10px" style="overflow-y:auto;">
+      <table id="mainTable" class="table table-striped table-bordered" style="width: 100%;border: 1px;">
+        <thead style="background-color: #336797;color: #ffffff; vertical-align: middle;">
+          <tr>
+            <th scope="col" class="text-center tdVerticalAlignMiddle" style="width: 25%">{{'test-set-structure-file-preview.test_item_description_header'|translate}}
+            </th>
+            <th scope="col" class="text-center tdVerticalAlignMiddle" style="width: 25%">{{'test-set-structure-file-preview.test_item_id_header'|translate}}</th>
+            <th scope="col" class="text-center tdVerticalAlignMiddle" style="width: 25%">{{'test-set-structure-file-preview.answer_form_header'|translate}}</th>
+            <th scope="col" class="text-center tdVerticalAlignMiddle" style="width: 25%">{{'test-set-structure-file-preview.format_description_header'|translate}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let testSetStructure of testSetStructureList; let in=index">
+            <td class="text-left tdVerticalAlignMiddle" [ngClass]="['tablePadding']">{{testSetStructure.testItemDescription}}</td>
+            <td class="text-left tdVerticalAlignMiddle" [ngClass]="['tablePadding']">{{testSetStructure.testItemId}}</td>
+            <td class="text-left tdVerticalAlignMiddle">
+              <select [(ngModel)]="testSetStructure.answerForm" [ngModelOptions]='{standalone: true}' class="form-control"
+                (change)="onChange(in,$event)">
+                <option value="">{{'test-set-structure-file-preview.dropdown_default_value'|translate}}</option>
+                <option *ngFor="let value of answerFormValueArray" [value]="value">{{value}}</option>
+              </select>
+            </td>
+            <td class="text-left tdVerticalAlignMiddle" [ngClass]="['tablePadding']">{{testSetStructure.formatDescription}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <br>
+    <div class="row" align="center">
+      <div class="col-md-12">
+        <button type="submit" class="btn btn-primary">{{'test-set-structure-file-preview.form_save_button'|translate}}</button>
+        &nbsp; <button type="button" id="cancelUploadBtn" class="btn btn-primary" data-toggle="modal" data-target="#cancelUploadModal">{{'test-set-structure-file-preview.form_cancel_button'|translate}}</button>
+      </div>
+    </div>
+  </div>
+</form>
+<div class="modal fade" id="cancelUploadModal" tabindex="-1" role="dialog" aria-hidden="true" data-show="true"
+  data-keyboard="false" data-backdrop="static">
+  <div class="modal-dialog modal-dialog-custom">
+    <div class="modal-content infoModalBody">
+      <div class="modal-header infoModalHeader">
+        {{'test-set-structure-file-preview.cancel_model_header_lebel'|translate}}
+        <!-- <button type="button" id="modalClose" class="close" data-dismiss="modal">&times;</button> -->
+      </div>
+      <!-- /modal-header -->
+      <div class="modal-body text-center">
+        <p style="font-size:16px;">{{'test-set-structure-file-preview.cancel_model_body_lebel'|translate}}</p>
+        <p class="text-center">
+          <button type="button" class="btn btn-primary lr-margin" data-dismiss="modal" (click)="resetPageAfterTestStructureSaved()">{{'test-set-structure-file-preview.cancel_model_ok_button'|translate}}</button>&nbsp;
+          <button type="button" class="btn btn-primary lr-margin" data-dismiss="modal">{{'test-set-structure-file-preview.cancel_model_cancel_button'|translate}}</button>
+        </p>
+      </div>
+    </div> <!-- /.modal-content -->
+  </div> <!-- /.modal-dialog -->
+</div>
+
+<div class="modal fade" id="saveTestStructureModal" tabindex="-1" role="dialog" aria-hidden="true" data-show="true"
+  data-keyboard="false" data-backdrop="static">
+  <div class="modal-dialog modal-dialog-custom">
+    <div class="modal-content">
+      <div class="modal-header infoModalHeader">
+        {{'test-set-structure-file-preview.saved_model_header_lebel'|translate}}
+      </div>
+      <!-- /modal-header -->
+      <div class="modal-body text-center">
+        <p style="font-size:16px;">{{'test-set-structure-file-preview.saved_model_body_lebel'|translate}}</p>
+        <p class="text-center">
+          <button type="button" class="btn btn-primary lr-margin" data-dismiss="modal" (click)="resetPageAfterTestStructureSaved()">{{'test-set-structure-file-preview.saved_model_ok_button'|translate}}</button>
+        </p>
+      </div>
+    </div> <!-- /.modal-content -->
+  </div> <!-- /.modal-dialog -->
+</div>
+
+<button style="visibility: hidden;" class="btn btn-danger" #showSavedTestStructureModelButton id="delete-node" name="button"
+  data-toggle="modal" data-target="#saveTestStructureModal"></button>
